@@ -1,10 +1,10 @@
-// pointcut: join point selector
+// pointcut: join point selector (name or regexp)
 // aspect: function to be executed before or after the join points
 var Interceptable = {
 
   match: function(pointcut) {
     var self = this;
-    return _.functions(self).filter(function(method) {
+    return _.reject(_.functions(self).filter(function(method) {
       if (_.isString(pointcut)) {
         return method === pointcut;
       } else if (_.isRegExp(pointcut)) {
@@ -13,6 +13,9 @@ var Interceptable = {
       } else {
         throw "Illegal pointcut: " + pointcut;
       }
+    }), function(method) {
+      // No point in instrumenting the instruments?
+      return method === "before" || method === "after";
     });
   },
 
@@ -52,18 +55,21 @@ var Interceptable = {
 
 var bird = _.extend(Interceptable, {
   fly: function(distance) {
-    console.log('flew', distance);
+    console.log("flew", distance);
     return distance;
   }
 });
 
 function enhance(bird) {
   bird.before('fly', function(distance) {
-    console.log('sung');
+    console.log("sung");
     return [ distance + " away"];
   });
   bird.after(/f.y/, function(distance) {
-    console.log('landed', distance);
+    console.log("landed", distance);
     return distance;
+  });
+  bird.after('before', function() {
+    console.log("should never happen");
   });
 }
