@@ -15,7 +15,7 @@ var Interceptable = {
         throw "Illegal pointcut: " + pointcut;
       }
     }), function(method) {
-      return method === "match" || method === "before" || method === "after";
+      return method === "match" || method === "before" || method === "after" || method === "instead";
     });
   },
 
