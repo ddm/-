@@ -21,6 +21,7 @@
 
       console.log("# before enhancement > bird.fly('1 km')");
       bird.fly('1 km');
+      bird.land('1 km');
 
       (function enhance(primitive) {
         // fancy fly
@@ -37,7 +38,7 @@
         // automatic landing
         primitive.after(/f.y/, bird.land);
         // disable manual landing
-        primitive.before('land', function() {
+        primitive.instead('land', function() {
           throw "No manual landing for you!"
         });
       })(bird);

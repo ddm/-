@@ -15,15 +15,14 @@ var Interceptable = {
         throw "Illegal pointcut: " + pointcut;
       }
     }), function(method) {
-      // No point in instrumenting the instruments?
       return method === "match" || method === "before" || method === "after";
     });
   },
 
-  // before allows an aspect to execute before the pointcut
-  // the aspect receives the arguments
-  // can modify the arguments
-  // is responsible for returning the arguments
+  // before: aspect executes before the selected join points
+  // ...is called with the same arguments as the join points
+  // ...can modify the arguments before the join points executes
+  // ...is responsible for returning the original or modified arguments
   before: function(pointcut, aspect) {
     var self = this;
     var join_points = self.match(pointcut);
@@ -36,10 +35,10 @@ var Interceptable = {
     });
   },
 
-  // after allows an aspect to execute after the pointcut
-  // the aspect receives the result of the pointcut
-  // can modify the result
-  // is responsible for returning the result
+  // after: aspect to executes after the selected join points
+  // ...is called with the result of the join points
+  // ...can modify the result of the join points
+  // ...is responsible for returning the original or modified result
   after: function(pointcut, aspect) {
     var self = this;
     var join_points = self.match(pointcut);
@@ -50,6 +49,16 @@ var Interceptable = {
         return aspect.apply(self, [ original_result ]);
       };
     });
+  },
+
+  // instead: aspect executes instead of the selected join points
+  instead: function(pointcut, aspect) {
+    var self = this;
+    var join_points = self.match(pointcut);
+    _.each(join_points, function(join_point) {
+      self[join_point] = aspect;
+    });
+
   }
 
 };
