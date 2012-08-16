@@ -1,3 +1,4 @@
+/* vim: set ts=2 sw=2 noai et: */
 // pointcut: join point selector (name or regexp)
 // aspect: function to be executed before or after the join points
 var Interceptable = {
@@ -15,7 +16,7 @@ var Interceptable = {
       }
     }), function(method) {
       // No point in instrumenting the instruments?
-      return method === "before" || method === "after";
+      return method === "match" || method === "before" || method === "after";
     });
   },
 
@@ -52,24 +53,3 @@ var Interceptable = {
   }
 
 };
-
-var bird = _.extend(Interceptable, {
-  fly: function(distance) {
-    console.log("flew", distance);
-    return distance;
-  }
-});
-
-function enhance(bird) {
-  bird.before('fly', function(distance) {
-    console.log("sung");
-    return [ distance + " away"];
-  });
-  bird.after(/f.y/, function(distance) {
-    console.log("landed", distance);
-    return distance;
-  });
-  bird.after('before', function() {
-    console.log("should never happen");
-  });
-}
