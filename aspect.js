@@ -56,9 +56,10 @@ var Interceptable = {
     var self = this;
     var join_points = self.match(pointcut);
     _.each(join_points, function(join_point) {
-      self[join_point] = aspect;
+      self[join_point] = function() {
+        return aspect.apply(self, arguments);
+      };
     });
-
   }
 
 };

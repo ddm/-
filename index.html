@@ -7,13 +7,15 @@
     <script>
       var bird = _.extend(Interceptable, {
 
+        name: "birdy",
+
         fly: function(distance) {
-          console.log("flew", distance);
+          console.log(this.name, "flew", distance);
           return distance;
         },
 
         land: function(distance) {
-          console.log("landed", distance, "away");
+          console.log(this.name, "landed", distance, "away");
           return distance;
         }
 
@@ -26,20 +28,20 @@
       (function enhance(primitive) {
         // fancy fly
         primitive.before('fly', function(distance) {
-          console.log("sung");
-          console.log("pepared to fly", distance);
+          console.log(this.name, "sung");
+          console.log(this.name, "pepared to fly", distance);
           return arguments;
         });
         // fancy landing
         primitive.after(/l..d/, function(distance) {
-          console.log("sung again");
+          console.log(this.name, "sung again");
           return distance;
         });
         // automatic landing
         primitive.after(/f.y/, bird.land);
         // disable manual landing
         primitive.instead('land', function() {
-          throw "No manual landing for you!"
+          throw "No manual landing for " + this.name;
         });
       })(bird);
 
