@@ -50,7 +50,13 @@
       console.log("\n# after enhancement\n> enhanced.fly('1 km');\n");
       enhanced.fly('1 km');
       console.log("\n> enhanced.land('1 km');\n");
-      enhanced.land('1 km');
+      try {
+        enhanced.land('1 km');
+      } catch (exception) {
+        console.log(exception);
+      }
+      console.log("\n> enhanced.__proto__ === original;\n");
+      console.log(enhanced.__proto__ === original);
     </script>
   </head>
 </html>
