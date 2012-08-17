@@ -5,9 +5,9 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
     <script src="aspect.js"></script>
     <script>
-      var bird = new Interceptable({
+      var original = {
 
-        name: "birdy",
+        name: "original",
 
         fly: function(distance) {
           console.log(this.name, "flew", distance);
@@ -19,35 +19,38 @@
           return distance;
         }
 
-      });
+      };
 
-      console.log("\n# before enhancement\n> bird.fly('1 km'); bird.land('1km');\n");
-      bird.fly('1 km'); bird.land('1 km');
+      console.log("\n# before enhancement\n> original.fly('1 km'); original.land('1km');\n");
+      original.fly('1 km'); original.land('1 km');
 
-      (function enhance(primitive) {
+      var enhanced = (function enhance(bird) {
+        var enhanced = new Interceptable(bird);
+        enhanced.name = 'enhanced';
         // fancy fly
-        primitive.before('fly', function(distance) {
+        enhanced.before('fly', function(distance) {
           console.log(this.name, "sung");
           console.log(this.name, "pepared to fly", distance);
           return arguments;
         });
         // fancy landing
-        primitive.after(/l..d/, function(distance) {
+        enhanced.after(/l..d/, function(distance) {
           console.log(this.name, "sung again");
           return distance;
         });
         // automatic landing
-        primitive.after(/f.y/, bird.land);
+        enhanced.after(/f.y/, enhanced.land);
         // disable manual landing
-        primitive.instead('land', function() {
+        enhanced.instead('land', function() {
           throw "No manual landing for " + this.name;
         });
-      })(bird);
+        return enhanced;
+      })(original);
 
-      console.log("\n# after enhancement\n> bird.fly('1 km');\n");
-      bird.fly('1 km');
-      console.log("\n> bird.land('1 km');\n");
-      bird.land('1 km');
+      console.log("\n# after enhancement\n> enhanced.fly('1 km');\n");
+      enhanced.fly('1 km');
+      console.log("\n> enhanced.land('1 km');\n");
+      enhanced.land('1 km');
     </script>
   </head>
 </html>

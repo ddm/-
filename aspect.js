@@ -15,7 +15,7 @@ myTarget.doSomething();
 */
 function Interceptable(target) {
 
-  return _.extend(target, {
+  return _.extend(Object.create(target), {
 
     match: function(pointcut) {
       var self = this;
