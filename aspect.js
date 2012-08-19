@@ -1,17 +1,15 @@
-/* vim: set ts=2 sw=2 noai et: */
-// pointcut: join point selector pattern (regex) or name (string)
-// aspect: function to be executed before or after the join points
-// example:
 /*
-var myTarget = µ({
+µ({
   doSomething: function() {
-    console.log("ok");
+    console.log("ok")
   }
 }).before(/do./, function() {
   console.log("ready?")
-}).doSomething();
+}).doSomething()
 */
 function Mutable(target) {
+// pointcut: join point selector function, regex or string (exact match)
+// aspect: function executed before, after or instead of matched join points
 
   return _.extend(Object.create(target), {
 
@@ -23,13 +21,15 @@ function Mutable(target) {
           return method === pointcut;
         } else if (_.isRegExp(pointcut)) {
           return pointcut.test(method);
+        } else if (_.isFunction(pointcut)) {
+          return pointcut(method);
         } else {
           throw "Illegal pointcut: " + pointcut;
         }
       });
     },
 
-    // before: aspect executes before the selected join points
+    // before: executes before the selected join points
     // ...is called with the same arguments as the join points
     // ...can modify the arguments before the join points executes
     // ...is responsible for returning the original or modified arguments
@@ -46,7 +46,7 @@ function Mutable(target) {
       return self;
     },
 
-    // after: aspect to executes after the selected join points
+    // after: executes after the selected join points
     // ...is called with the result of the join points
     // ...can modify the result of the join points
     // ...is responsible for returning the original or modified result
@@ -63,8 +63,8 @@ function Mutable(target) {
       return self;
     },
 
-    // instead: aspect executes instead of the selected join points
-    instead: function(pointcut, aspect) {
+    // insteadOf: executes instead of the selected join points
+    insteadOf: function(pointcut, aspect) {
       var self = this;
       var join_points = self.match(pointcut);
       _.each(join_points, function(join_point) {
@@ -78,3 +78,4 @@ function Mutable(target) {
 
 }
 var µ = Mutable;
+/* vim: set ts=2 sw=2 noai et : */

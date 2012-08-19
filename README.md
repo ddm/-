@@ -1,4 +1,1 @@
-aspect.js
-=========
-
-![Logo](logo.png)
+Aspect-Oriented Javascript

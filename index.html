@@ -6,23 +6,16 @@
     <script src="full.min.js"></script>
     <script>
       var original = {
-
         name: "original",
-
         fly: function(distance) {
           console.log(this.name, "flew", distance);
           return distance;
         },
-
         land: function(distance) {
           console.log(this.name, "landed", distance, "away");
           return distance;
         }
-
       };
-
-      console.log("\n# before enhancement\n> original.fly('1 km'); original.land('1km');\n");
-      original.fly('1 km'); original.land('1 km');
 
       var enhanced = (function enhance(bird) {
         var enhanced = µ(bird);
@@ -41,12 +34,14 @@
         // automatic landing
         enhanced.after(/f.y/, enhanced.land);
         // disable manual landing
-        enhanced.instead('land', function() {
+        enhanced.insteadOf('land', function() {
           throw "No manual landing for " + this.name;
         });
         return enhanced;
       })(original);
 
+      console.log("\n# before enhancement\n> original.fly('1 km'); original.land('1km');\n");
+      original.fly('1 km'); original.land('1 km');
       console.log("\n# after enhancement\n> enhanced.fly('1 km');\n");
       enhanced.fly('1 km');
       console.log("\n> enhanced.land('1 km');\n");
