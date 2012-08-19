@@ -1,4 +1,4 @@
-/*
+/* Copyright (c) 2012 Dimitri del Marmol (MIT license)
 µ({
   doSomething: function() {
     console.log("ok")
