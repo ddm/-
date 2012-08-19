@@ -3,7 +3,7 @@
 // aspect: function to be executed before or after the join points
 // example:
 /*
-var myTarget = new Interceptable({
+var myTarget = Mutable({
   doSomething: function() {
     console.log("ok");
   }
@@ -13,19 +13,18 @@ myTarget.before(/do./, function() {
 });
 myTarget.doSomething();
 */
-function Interceptable(target) {
+function Mutable(target) {
 
   return _.extend(Object.create(target), {
 
     match: function(pointcut) {
       var self = this;
-      var methods = _.difference(_.functions(self), _.functions(new Interceptable({})));
+      var methods = _.difference(_.functions(self), _.functions(Mutable(null)));
       return methods.filter(function(method) {
         if (_.isString(pointcut)) {
           return method === pointcut;
         } else if (_.isRegExp(pointcut)) {
-          var matches = method.match(pointcut);
-          return matches && matches.length > 0;
+          return pointcut.test(method);
         } else {
           throw "Illegal pointcut: " + pointcut;
         }
@@ -77,3 +76,4 @@ function Interceptable(target) {
   });
 
 }
+var µ = Mutable;
