@@ -3,15 +3,13 @@
 // aspect: function to be executed before or after the join points
 // example:
 /*
-var myTarget = Mutable({
+var myTarget = µ({
   doSomething: function() {
     console.log("ok");
   }
-});
-myTarget.before(/do./, function() {
+}).before(/do./, function() {
   console.log("ready?")
-});
-myTarget.doSomething();
+}).doSomething();
 */
 function Mutable(target) {
 
@@ -45,6 +43,7 @@ function Mutable(target) {
           return original.apply(self, new_arguments);
         };
       });
+      return self;
     },
 
     // after: aspect to executes after the selected join points
@@ -61,6 +60,7 @@ function Mutable(target) {
           return aspect.apply(self, [ original_result ]);
         };
       });
+      return self;
     },
 
     // instead: aspect executes instead of the selected join points
@@ -72,6 +72,7 @@ function Mutable(target) {
           return aspect.apply(self, arguments);
         };
       });
+      return self;
     }
   });
 
