@@ -1,3 +1,3 @@
 #!/bin/sh
-uglifyjs aspect.js | grep -v vim > min.js
-cat underscore-1.3.3.min.js min.js > full.min.js
+uglifyjs µ.js | grep -v vim > µ.min.js
+cat underscore-1.3.3.min.js min.js > full.µ.js
