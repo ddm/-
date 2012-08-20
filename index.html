@@ -21,12 +21,12 @@
         enhanced.name = 'enhanced';
         // fancy flight
         enhanced.before('fly', function(distance) {
-          console.log(this.name, "sung");
+          console.log(this.name, "sang");
           console.log(this.name, "pepared to fly", distance);
         });
         // fancy landing
         enhanced.after(/l..d/, function(distance) {
-          console.log(this.name, "sung again");
+          console.log(this.name, "sang again");
         });
         // automatic landing
         enhanced.after(/f.y/, enhanced.land);
