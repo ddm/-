@@ -6,10 +6,12 @@
 }).before(/do./, function() {
   console.log("ready?")
 }).doSomething()
-µ(document)
-  .before(/Element/, function() { console.log("interception!") })
-  .after(/./, function() { console.log("How many methods does window have?", µ(window).match(/./).length) })
+µ(
+  µ(document)
+    .before(/Element/, function() { console.log("interception!") })
+    .after(/./, function() { console.log("How many methods does window have?", µ(window).match(/./).length) })
   .getElementsByTagName('head')
+).match(/./)
 */
 function Mutable(target) {
 // pointcut: join point selector function, regex or string (exact match)
@@ -36,7 +38,6 @@ function Mutable(target) {
     // before: executes before the selected join points
     // ...is called with the same arguments as the join points
     // ...can modify the arguments before the join points executes
-    // ...is responsible for returning the original or modified arguments
     before: function(pointcut, aspect) {
       var self = this;
       var join_points = self.match(pointcut);
@@ -53,7 +54,6 @@ function Mutable(target) {
     // after: executes after the selected join points
     // ...is called with the result of the join points
     // ...can modify the result of the join points
-    // ...is responsible for returning the original or modified result
     after: function(pointcut, aspect) {
       var self = this;
       var join_points = self.match(pointcut);
