@@ -40,8 +40,11 @@ this._chain)}});j(["concat","join","slice"],function(a){var b=k[a];m.prototype[a
 }).doSomething()
 µ(
   µ(document)
-    .before(/Element/, function() { console.log("interception!") })
-    .after(/./, function() { console.log("How many getters does window have?", µ(window).match(/get/).length) })
+    .before(/Element/, function() { console.log("CAN I HAZ AOP PLZ?") })
+    .after(
+      function() { return true },
+      function() { console.log("How many getters does window have?", µ(window).match(/get/).length) }
+    )
   .getElementsByTagName('head')
 ).match(/./)
 */function µ(e){return _.extend(Object.create(e),{match:function(e){var t=this,n=_.difference(_.functions(t),_.functions(µ(null)));return n.filter(function(t){return _.isString(e)?t===e:_.isRegExp(e)?e.test(t):_.isFunction(e)?e(t):!1})},before:function(e,t){var n=this,r=n.match(e);return _.each(r,function(e){var r=n[e];n[e]=function(){var e=t.apply(n,arguments);return r.apply(n,e||arguments)}}),n},after:function(e,t){var n=this,r=n.match(e);return _.each(r,function(e){var r=n[e];n[e]=function(){var e=r.apply(n,arguments);return t.apply(n,[e])||e}}),n},insteadOf:function(e,t){var n=this,r=n.match(e);return _.each(r,function(e){n[e]=function(){return t.apply(n,arguments)}}),n}})};
