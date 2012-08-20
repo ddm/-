@@ -13,15 +13,13 @@
   .getElementsByTagName('head')
 ).match(/./)
 */
-function Mutable(target) {
+function µ(target) {
 // pointcut: join point selector function, regex or string (exact match)
 // aspect: function executed before, after or instead of matched join points
-
   return _.extend(Object.create(target), {
-
     match: function(pointcut) {
       var self = this;
-      var methods = _.difference(_.functions(self), _.functions(Mutable(null)));
+      var methods = _.difference(_.functions(self), _.functions(µ(null)));
       return methods.filter(function(method) {
         if (_.isString(pointcut)) {
           return method === pointcut;
@@ -34,7 +32,6 @@ function Mutable(target) {
         }
       });
     },
-
     // before: executes before the selected join points
     // ...is called with the same arguments as the join points
     // ...can modify the arguments before the join points executes
@@ -50,7 +47,6 @@ function Mutable(target) {
       });
       return self;
     },
-
     // after: executes after the selected join points
     // ...is called with the result of the join points
     // ...can modify the result of the join points
@@ -66,7 +62,6 @@ function Mutable(target) {
       });
       return self;
     },
-
     // insteadOf: executes instead of the selected join points
     insteadOf: function(pointcut, aspect) {
       var self = this;
@@ -79,7 +74,5 @@ function Mutable(target) {
       return self;
     }
   });
-
 }
-var µ = Mutable;
 /* vim: set ts=2 sw=2 noai et : */

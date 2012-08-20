@@ -23,12 +23,10 @@
         enhanced.before('fly', function(distance) {
           console.log(this.name, "sung");
           console.log(this.name, "pepared to fly", distance);
-          return arguments;
         });
         // fancy landing
         enhanced.after(/l..d/, function(distance) {
           console.log(this.name, "sung again");
-          return distance;
         });
         // automatic landing
         enhanced.after(/f.y/, enhanced.land);
