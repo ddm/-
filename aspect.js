@@ -6,6 +6,10 @@
 }).before(/do./, function() {
   console.log("ready?")
 }).doSomething()
+µ(document)
+  .before(/Element/, function() { console.log("interception!") })
+  .after(/./, function() { console.log("How many methods does window have?", µ(window).match(/./).length) })
+  .getElementsByTagName('head')
 */
 function Mutable(target) {
 // pointcut: join point selector function, regex or string (exact match)
@@ -40,7 +44,7 @@ function Mutable(target) {
         var original = self[join_point];
         self[join_point] = function() {
           var new_arguments = aspect.apply(self, arguments);
-          return original.apply(self, new_arguments);
+          return original.apply(self, new_arguments || arguments);
         };
       });
       return self;
@@ -57,7 +61,7 @@ function Mutable(target) {
         var original = self[join_point];
         self[join_point] = function() {
           var original_result = original.apply(self, arguments);
-          return aspect.apply(self, [ original_result ]);
+          return aspect.apply(self, [ original_result ]) || original_result;
         };
       });
       return self;
