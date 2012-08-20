@@ -31,9 +31,9 @@ function µ(decorated) {
     before: function(selector, decorator) {
       var self = this;
       var selected = self.match(selector);
-      _.each(selected, function(join_point) {
-        var original = self[join_point];
-        self[join_point] = function() {
+      _.each(selected, function(method) {
+        var original = self[method];
+        self[method] = function() {
           var new_arguments = decorator.apply(self, arguments);
           return original.apply(self, new_arguments || arguments);
         };
@@ -43,9 +43,9 @@ function µ(decorated) {
     after: function(selector, decorator) {
       var self = this;
       var selected = self.match(selector);
-      _.each(selected, function(join_point) {
-        var original = self[join_point];
-        self[join_point] = function() {
+      _.each(selected, function(method) {
+        var original = self[method];
+        self[method] = function() {
           var original_result = original.apply(self, arguments);
           return decorator.apply(self, [ original_result ]) || original_result;
         };
@@ -55,8 +55,8 @@ function µ(decorated) {
     insteadOf: function(selector, decorator) {
       var self = this;
       var selected = self.match(selector);
-      _.each(selected, function(join_point) {
-        self[join_point] = function() {
+      _.each(selected, function(method) {
+        self[method] = function() {
           return decorator.apply(self, arguments);
         };
       });
