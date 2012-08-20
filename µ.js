@@ -9,7 +9,7 @@
 µ(
   µ(document)
     .before(/Element/, function() { console.log("interception!") })
-    .after(/./, function() { console.log("How many methods does window have?", µ(window).match(/./).length) })
+    .after(/./, function() { console.log("How many getters does window have?", µ(window).match(/get/).length) })
   .getElementsByTagName('head')
 ).match(/./)
 */
@@ -21,15 +21,10 @@ function µ(target) {
       var self = this;
       var methods = _.difference(_.functions(self), _.functions(µ(null)));
       return methods.filter(function(method) {
-        if (_.isString(pointcut)) {
-          return method === pointcut;
-        } else if (_.isRegExp(pointcut)) {
-          return pointcut.test(method);
-        } else if (_.isFunction(pointcut)) {
-          return pointcut(method);
-        } else {
-          throw "Illegal pointcut: " + pointcut;
-        }
+        return _.isString(pointcut) ? method === pointcut
+          : _.isRegExp(pointcut) ? pointcut.test(method)
+          : _.isFunction(pointcut) ? pointcut(method)
+          : false;
       });
     },
     // before: executes before the selected join points
