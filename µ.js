@@ -49,4 +49,9 @@ function µ(decorated) {
     }
   });
 }
+
+function h(o) {
+  var x = µ(o)
+  return x === o ? o : x.after(/./, function(y) { return x(y) })
+}
 /* vim: set ts=2 sw=2 noai et : */
