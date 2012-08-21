@@ -17,7 +17,7 @@
 ).match(/./)
 */
 function µ(decorated) {
-  return _.extend(Object.create(decorated), {
+  return !_.isObject(decorated) ? decorated : _.extend(Object.create(decorated), {
     match: function(selector) {
       var self = this;
       var methods = _.difference(_.functions(self), _.functions(µ(null)));
