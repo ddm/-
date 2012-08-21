@@ -5,12 +5,12 @@ function µ(decorated) {
       var self = this;
       var methods = _.difference(_.functions(self), _.functions(µ(null)));
       var filter =
-        _.isString(selector) ? function(method) { return selector === method }
-        : _.isRegExp(selector) ? function(method) { return selector.test(method) }
+        _.isString(selector) ? function(method) { return selector === method; }
+        : _.isRegExp(selector) ? function(method) { return selector.test(method); }
         : _.isFunction(selector) ? selector
         : false;
       return methods.filter(filter).filter(function(method) {
-        return self[method].apply
+        return self[method].apply;
       });
     },
     before: function(selector, decorator) {
@@ -48,10 +48,5 @@ function µ(decorated) {
       return self;
     }
   });
-}
-
-function h(o) {
-  var x = µ(o)
-  return x === o ? o : x.after(/./, function(y) { return x(y) })
 }
 /* vim: set ts=2 sw=2 noai et : */
