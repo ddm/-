@@ -1,14 +1,16 @@
 // Copyright (c) 2012 Dimitri del Marmol (MIT license)
 function µ(decorated) {
-  return _.extend(Object.create(decorated), {
+  return _.isFunction(decorated) ? decorated : _.extend(Object.create(decorated), {
     match: function(selector) {
       var self = this;
       var methods = _.difference(_.functions(self), _.functions(µ(null)));
-      return methods.filter(function(method) {
-        return _.isString(selector) ? method === selector
-          : _.isRegExp(selector) ? selector.test(method)
-          : _.isFunction(selector) ? selector(method)
-          : false;
+      var filter =
+        _.isString(selector) ? function(method) { return selector === method }
+        : _.isRegExp(selector) ? function(method) { return selector.test(method) }
+        : _.isFunction(selector) ? selector
+        : false;
+      return methods.filter(filter).filter(function(method) {
+        return self[method].apply
       });
     },
     before: function(selector, decorator) {
