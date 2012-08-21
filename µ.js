@@ -1,26 +1,9 @@
-/* Copyright (c) 2012 Dimitri del Marmol (MIT license)
-µ({
-  doSomething: function() {
-    console.log("ok")
-  }
-}).before(/do./, function() {
-  console.log("ready?")
-}).doSomething()
-µ(
-  µ(document)
-    .before(/Element/, function() { console.log("CAN I HAZ AOP PLZ?") })
-    .after(
-      function() { return true },
-      function() { console.log("How many getters does window have?", µ(window).match(/get/).length) }
-    )
-  .getElementsByTagName('head')
-).match(/./)
-*/
+// Copyright (c) 2012 Dimitri del Marmol (MIT license)
 function µ(decorated) {
   return !_.isObject(decorated) ? decorated : _.extend(Object.create(decorated), {
     match: function(selector) {
       var self = this;
-      var methods = _.difference(_.functions(self), _.functions(µ(null)));
+      var methods = _.difference(_.functions(self), _.functions(µ({})));
       return methods.filter(function(method) {
         return _.isString(selector) ? method === selector
           : _.isRegExp(selector) ? selector.test(method)

@@ -30,21 +30,3 @@ function(a){var b=N++;return a?a+b:b};b.templateSettings={evaluate:/<%([\s\S]+?)
 u,function(a,b){return"'+\n_.escape("+w(b)+")+\n'"}).replace(d.interpolate||u,function(a,b){return"'+\n("+w(b)+")+\n'"}).replace(d.evaluate||u,function(a,b){return"';\n"+w(b)+"\n;__p+='"})+"';\n";d.variable||(a="with(obj||{}){\n"+a+"}\n");var a="var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};\n"+a+"return __p;\n",e=new Function(d.variable||"obj","_",a);if(c)return e(c,b);c=function(a){return e.call(this,a,b)};c.source="function("+(d.variable||"obj")+"){\n"+a+"}";return c};
 b.chain=function(a){return b(a).chain()};var m=function(a){this._wrapped=a};b.prototype=m.prototype;var x=function(a,c){return c?b(a).chain():a},M=function(a,c){m.prototype[a]=function(){var a=i.call(arguments);J.call(a,this._wrapped);return x(c.apply(b,a),this._chain)}};b.mixin(b);j("pop,push,reverse,shift,sort,splice,unshift".split(","),function(a){var b=k[a];m.prototype[a]=function(){var d=this._wrapped;b.apply(d,arguments);var e=d.length;(a=="shift"||a=="splice")&&e===0&&delete d[0];return x(d,
 this._chain)}});j(["concat","join","slice"],function(a){var b=k[a];m.prototype[a]=function(){return x(b.apply(this._wrapped,arguments),this._chain)}});m.prototype.chain=function(){this._chain=true;return this};m.prototype.value=function(){return this._wrapped}}).call(this);
-/* Copyright (c) 2012 Dimitri del Marmol (MIT license)
-µ({
-  doSomething: function() {
-    console.log("ok")
-  }
-}).before(/do./, function() {
-  console.log("ready?")
-}).doSomething()
-µ(
-  µ(document)
-    .before(/Element/, function() { console.log("CAN I HAZ AOP PLZ?") })
-    .after(
-      function() { return true },
-      function() { console.log("How many getters does window have?", µ(window).match(/get/).length) }
-    )
-  .getElementsByTagName('head')
-).match(/./)
-*/function µ(e){return _.isObject(e)?_.extend(Object.create(e),{match:function(e){var t=this,n=_.difference(_.functions(t),_.functions(µ(null)));return n.filter(function(t){return _.isString(e)?t===e:_.isRegExp(e)?e.test(t):_.isFunction(e)?e(t):!1})},before:function(e,t){var n=this,r=n.match(e);return _.each(r,function(e){var r=n[e];n[e]=function(){var e=t.apply(n,arguments);return r.apply(n,e||arguments)}}),n},after:function(e,t){var n=this,r=n.match(e);return _.each(r,function(e){var r=n[e];n[e]=function(){var e=r.apply(n,arguments);return t.apply(n,[e])||e}}),n},insteadOf:function(e,t){var n=this,r=n.match(e);return _.each(r,function(e){n[e]=function(){return t.apply(n,arguments)}}),n}}):e};
