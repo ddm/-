@@ -4,18 +4,19 @@ function µ(decorated) {
     match: function(selector) {
       var self = this
       var methods = _.difference(_.functions(self), _.functions(µ(null)))
-      var filter =
+      var selected =
         _.isString(selector) ? function(method) { return selector === method }
         : _.isRegExp(selector) ? function(method) { return selector.test(method) }
         : _.isFunction(selector) ? selector
         : false
-      return methods.filter(filter).filter(function(method) {
+      return methods.filter(selected).filter(function(method) {
         return self[method].apply
+        
       })
     },
     before: function(selector, decorator) {
       var self = this
-      var selected = self.match(selector)
+      var selected = !_.isFunction(decorator) ? [] : self.match(selector)
       _.each(selected, function(method) {
         var original = self[method]
         self[method] = function() {
@@ -27,7 +28,7 @@ function µ(decorated) {
     },
     after: function(selector, decorator) {
       var self = this
-      var selected = self.match(selector)
+      var selected = !_.isFunction(decorator) ? [] : self.match(selector)
       _.each(selected, function(method) {
         var original = self[method]
         self[method] = function() {
@@ -39,7 +40,7 @@ function µ(decorated) {
     },
     insteadOf: function(selector, decorator) {
       var self = this
-      var selected = self.match(selector)
+      var selected = !_.isFunction(decorator) ? [] : self.match(selector)
       _.each(selected, function(method) {
         self[method] = function() {
           return decorator.apply(self, arguments)
