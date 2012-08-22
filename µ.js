@@ -1,7 +1,7 @@
 // Copyright (c) 2012 Dimitri del Marmol (MIT license)
 function µ(decorated) {
   return _.isFunction(decorated) ? decorated : _.extend(Object.create(decorated), {
-    match: function(selector) {
+    match: function match(selector) {
       var self = this
       var methods = _.difference(_.functions(self), _.functions(µ(null)))
       var selected =
@@ -14,7 +14,7 @@ function µ(decorated) {
         
       })
     },
-    before: function(selector, decorator) {
+    before: function before(selector, decorator) {
       var self = this
       var selected = !_.isFunction(decorator) ? [] : self.match(selector)
       _.each(selected, function(method) {
@@ -26,7 +26,7 @@ function µ(decorated) {
       })
       return self
     },
-    after: function(selector, decorator) {
+    after: function after(selector, decorator) {
       var self = this
       var selected = !_.isFunction(decorator) ? [] : self.match(selector)
       _.each(selected, function(method) {
@@ -38,7 +38,7 @@ function µ(decorated) {
       })
       return self
     },
-    insteadOf: function(selector, decorator) {
+    insteadOf: function insteadOf(selector, decorator) {
       var self = this
       var selected = !_.isFunction(decorator) ? [] : self.match(selector)
       _.each(selected, function(method) {
