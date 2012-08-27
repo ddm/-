@@ -11,7 +11,6 @@ function µ(decorated) {
         : false
       return methods.filter(selected).filter(function(method) {
         return self[method].apply
-        
       })
     },
     before: function before(selector, decorator) {
