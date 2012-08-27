@@ -1,0 +1,13 @@
+/* µ <%= meta.version %> (<%= grunt.template.today("yyyy-mm-dd") %>)
+ * https://gitub.com/ddm/-
+ * (c) <%= grunt.template.today("yyyy") %> Dimitri del Marmol
+ * µ may be freely distributed under the MIT license
+ * Inspired by https://github.com/raganwald/YouAreDaChef
+ * -
+ * Underscore.js 1.3.3
+ * (c) 2009-2012 Jeremy Ashkenas, DocumentCloud Inc.
+ * Underscore may be freely distributed under the MIT license.
+ * Portions of Underscore are inspired or borrowed from Prototype,
+ * Oliver Steele's Functional, and John Resig's Micro-Templating.
+ * For all details and documentation: http://documentcloud.github.com/underscore
+ */

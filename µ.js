@@ -1,4 +1,3 @@
-// Copyright (c) 2012 Dimitri del Marmol (MIT license)
 function µ(decorated) {
   return _.isFunction(decorated) ? decorated : _.extend(Object.create(decorated), {
     match: function match(selector) {
