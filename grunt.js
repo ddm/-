@@ -4,7 +4,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     meta: {
-      version: '1.0.1'
+      version: '1.0.2'
     },
     lint: {
       files: ['grunt.js', 'µ.js', '_.js']
