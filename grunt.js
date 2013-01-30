@@ -4,7 +4,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     meta: {
-      version: '1.0.0ß'
+      version: '1.0.1'
     },
     lint: {
       files: ['grunt.js', 'µ.js', '_.js']
@@ -45,6 +45,6 @@ module.exports = function(grunt) {
   });
 
   // Default task.
-  grunt.registerTask('default', 'concat min'); // TODO lint + Jasmine
+  grunt.registerTask('default', 'concat min'); // TODO lint + Unit test
 
 };

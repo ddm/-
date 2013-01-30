@@ -1,5 +1,7 @@
 function µ(decorated) {
-  return _.isFunction(decorated) ? decorated : _.extend(Object.create(decorated), {
+  var undefined = (function(undefined) { return undefined })();
+
+  return _.extend(Object.create(decorated === undefined ? null : decorated), {
     match: function match(selector) {
       var self = this
       var methods = _.difference(_.functions(self), _.functions(µ(null)))
@@ -48,4 +50,3 @@ function µ(decorated) {
     }
   })
 }
-/* vim: set ts=2 sw=2 noai et : */

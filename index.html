@@ -16,9 +16,9 @@
         }
       };
 
-      var enhanced = (function enhance(bird) {
+      function enhance(bird, name) {
         var enhanced = µ(bird);
-        enhanced.name = 'enhanced';
+        enhanced.name = name || 'enhanced';
         // fancy flight
         enhanced.before('fly', function(distance) {
           console.log(this.name, "sang");
@@ -35,7 +35,9 @@
           throw "No manual landing for " + this.name;
         });
         return enhanced;
-      })(original);
+      }
+
+      var enhanced = enhance(original);
 
       console.log("\n# before enhancement\n> original.fly('1 km'); original.land('1km');\n");
       original.fly('1 km'); original.land('1 km');
@@ -49,7 +51,7 @@
       }
       console.log("\n> enhanced.__proto__ === original;\n");
       console.log(enhanced.__proto__ === original);
+
     </script>
   </head>
 </html>
-<!-- vim: set ts=2 sw=2 noai et:-->
