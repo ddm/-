@@ -1,17 +1,13 @@
 /*global module:false*/
 module.exports = function(grunt) {
 
-  // Project configuration.
   grunt.initConfig({
     meta: {
-      version: '2.0.0'
-    },
-    lint: {
-      files: ['grunt.js', 'µ.js', '_.js']
+      version: '2.1.1'
     },
     concat: {
       dist: {
-        src: ['<file_template:CREDITS>', 'µ.js', '_.js'],
+        src: ['<file_template:CREDITS>', '_.js', 'µ.js'],
         dest: 'dist/µ.full.js'
       }
     },
@@ -21,30 +17,9 @@ module.exports = function(grunt) {
         dest: 'dist/µ.full.min.js'
       }
     },
-    watch: {
-      files: '<config:lint.files>',
-      tasks: '' // TODO lint
-    },
-    jshint: {
-      options: {
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        boss: true,
-        eqnull: true,
-        browser: true
-      },
-      globals: {}
-    },
     uglify: {}
   });
 
-  // Default task.
-  grunt.registerTask('default', 'concat min'); // TODO lint + Unit test
+  grunt.registerTask('default', 'concat min');
 
 };

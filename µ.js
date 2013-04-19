@@ -25,7 +25,7 @@
           var original = µtated[method];
           µtated[method] = function intercepted () {
             var args = arguments;
-            interceptor(intercepted, original, args, o);
+            return interceptor.apply(µtated, [intercepted, original, args, o]);
           };
         });
         return µtated;
