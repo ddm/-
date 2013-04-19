@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>µ tests</title>
+    <link rel="stylesheet" href="mocha.css" />
+
+    <script src="jquery.js"></script>
+    <script src="expect.js"></script>
+    <script src="mocha.js"></script>
+
+    <script src="../_.js"></script>
+    <script src="../µ.js"></script>
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script>mocha.setup('bdd')</script>
+
+    <script src="basic-usage.js"></script>
+    <script src="advanced-usage.js"></script>
+
+    <script>
+      mocha.checkLeaks();
+      mocha.globals(['jQuery']);
+      mocha.run();
+    </script>
+  </body>
+</html>
