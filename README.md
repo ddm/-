@@ -11,7 +11,7 @@ Prerequisites
 Usage
 -----
 
-Examples can be found in tests/index.html
+Examples can be found in test/index.html
 
 To build on Linux, OS X etc.
 
